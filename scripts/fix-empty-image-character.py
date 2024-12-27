@@ -2,15 +2,14 @@ import json
 
 from dotenv import load_dotenv
 
-from neo4j import Session
 from src.bg_remover.bria import Bria
-from src.database import Neo4J
-from src.utils.general import get_base64_from_image, get_image_from_base64
+from src.databases.neo4j import Neo4JConnector
+from src.utils.general import get_image_from_base64, get_base64_from_image
 
 bria = Bria()
 
 
-def fix_empty_image_character(session: Session):
+def fix_empty_image_character(session):
     results = session.run("MATCH (n: StoryData) RETURN n").data()
     for result in results:
         main_characters = json.loads(result.get('n').get('main_characters'))
@@ -25,7 +24,7 @@ def fix_empty_image_character(session: Session):
 
 
 def main():
-    neo4j_connector = Neo4J()
+    neo4j_connector = Neo4JConnector()
     neo4j_connector.with_session(fix_empty_image_character)
 
 

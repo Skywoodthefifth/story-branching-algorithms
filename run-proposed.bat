@@ -1,0 +1,17 @@
+@echo off
+
+REM Activate the virtual environment
+call .venv\Scripts\activate
+
+REM Run the Python script
+python main.py generate-story-with ^
+    --approach proposed ^
+    --num-chapters 3 ^
+    --min-num-choices 2 ^
+    --max-num-choices 3 ^
+    --min-num-choices-opportunity 1 ^
+    --max-num-choices-opportunity 2 ^
+    --enable-image-generation ^
+    --themes "adventure" ^
+    --themes "high-fantasy" ^
+    --themes "science fiction"

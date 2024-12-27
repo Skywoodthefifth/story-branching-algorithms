@@ -1,5 +1,7 @@
-from typing_extensions import List
+from typing import Optional
 
-from src.models.frontier_item import FrontierItem
+from src.models.enums.branching_type import BranchingType
+from src.models.story.story_choice import StoryChoice
+from src.models.story_chunk import StoryChunk
 
-Frontiers = List[FrontierItem]
+Frontiers = list[tuple[int, int, Optional[StoryChunk], Optional[StoryChoice], BranchingType]]

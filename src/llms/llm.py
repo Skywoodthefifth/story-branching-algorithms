@@ -4,13 +4,11 @@ from abc import ABC, abstractmethod
 
 from loguru import logger
 
-from src.types.openai import (ConversationHistory, InputTokenCount,
-                              ModelResponse, OutputTokenCount)
+from src.types.openai import ConversationHistory
 
 
 class LLM(ABC):
-    def __init__(self, model_name: str, max_tokens: int):
-        self.model_name = model_name
+    def __init__(self, max_tokens: int):
         self.max_tokens = max_tokens
 
     @staticmethod
@@ -44,7 +42,7 @@ class LLM(ABC):
             for idx in range(start_idx, 3, -2):
                 if history[idx]["role"] != "assistant" or history[idx - 1]["role"] != "user":
                     raise ValueError(f"History is not in the correct conversation format: "
-                                     f"{history[idx]["role"]} {history[idx - 1]["role"]}")
+                                     f"{history[idx]['role']} {history[idx - 1]['role']}")
 
                 assistant_message = history[idx]
                 user_message = history[idx - 1]
@@ -70,8 +68,7 @@ class LLM(ABC):
             return history
 
     @abstractmethod
-    def generate_content(self, messages: ConversationHistory) -> tuple[ConversationHistory, ModelResponse, 
-                                                                       InputTokenCount, OutputTokenCount]:
+    def generate_content(self, ctx: 'GenerationContext', messages: ConversationHistory) -> tuple[str, dict]:
         pass
 
     @abstractmethod

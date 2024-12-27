@@ -7,6 +7,3 @@ from openai.types.chat import (ChatCompletionAssistantMessageParam,
 OpenAIRole = Literal["user", "assistant", "system"]
 ConversationHistory = list[ChatCompletionSystemMessageParam | ChatCompletionUserMessageParam |
                                 ChatCompletionAssistantMessageParam]
-ModelResponse = str
-InputTokenCount = int
-OutputTokenCount = int
