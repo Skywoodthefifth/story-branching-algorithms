@@ -15,6 +15,7 @@ MAX_TOKENS = {
     'gpt-4-turbo-preview': 128000,
     'gemini-1.0-pro': 32768,
     'gemini-1.5-flash': 1048576,
+    'gemini-2.0-flash-exp': 1048576,
     'claude-3-opus-20240229': 200000,
     'claude-3-sonnet-20240229': 200000,
     'claude-2.1': 200000,
