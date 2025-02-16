@@ -45,6 +45,7 @@ def process_generation_queue(ctx: GenerationContext, story_data: StoryData):
             except Exception as e:
                 current_attempt += 1
                 logger.warning(f"Exception occurred while chat completion: {e}")
+                logger.warning(f"Retry {current_attempt}/{max_retry_attempts}")
 
         if not has_chunk_generation_success or current_chunk is None or story_chunk_raw is None:
             logger.error(f"Failed to generate story chunk.")

@@ -29,7 +29,22 @@ def initialize_generation(ctx: GenerationContext):
         file.write(json.dumps({"histories": [history]}, indent=2))
 
     if not ctx.config.existing_plot:
-        story_data_raw, story_data_obj = ctx.generation_model.generate_content(ctx, history)
+        max_retry_attempts = 3
+        has_generation_success, current_attempt = False, 0
+        story_data_raw, story_data_obj = None, None
+        while not has_generation_success and current_attempt < max_retry_attempts:
+            try:
+                story_data_raw, story_data_obj = ctx.generation_model.generate_content(ctx, history)
+                has_generation_success = True
+            except Exception as e:
+                current_attempt += 1
+                logger.warning(f"Exception occurred while chat completion: {e}")
+                logger.warning(f"Retry {current_attempt}/{max_retry_attempts}")
+    
+        if not has_generation_success or story_data_raw is None or story_data_obj is None:
+            logger.error(f"Failed to generate story data.")
+            logger.error("Exiting...")
+            exit(1)
     else:
         with open(ctx.config.existing_plot, "r") as file:
             content = json.load(file)
