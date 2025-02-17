@@ -30,7 +30,7 @@ def process_generation_queue(ctx: GenerationContext, story_data: StoryData):
         history = append_openai_message(prompt, history=history)
 
         # Retry chunk generation if failed
-        max_retry_attempts = 3
+        max_retry_attempts = 10
         has_chunk_generation_success, current_attempt = False, 0
         current_chunk, story_chunk_raw = None, None
         while not has_chunk_generation_success and current_attempt < max_retry_attempts:
